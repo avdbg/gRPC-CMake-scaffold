@@ -1,7 +1,7 @@
-project(grpc-cmake-example)
+project(gRPC-CMake-scaffold)
 cmake_minimum_required(VERSION 3.2)
 
-add_compile_options(-std=c++11)
+set(CMAKE_CXX_STANDARD 11)
 
 # GRPC and Protocol Buffers libraries location
 list(APPEND CMAKE_PREFIX_PATH "/opt/grpc" "/opt/protobuf")
@@ -24,23 +24,23 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_SRC_DIR} ${PROTOS})
 grpc_generate_cpp(GRPC_SRCS GRPC_HDRS ${PROTO_SRC_DIR} ${PROTOS})
 
 # Building server
-add_executable(greeter_server
-    ${CMAKE_CURRENT_SOURCE_DIR}/greeter_server.cc
+add_executable(server
+        ${CMAKE_CURRENT_SOURCE_DIR}/server.cc
     ${PROTO_SRCS}
     ${GRPC_SRCS}
 )
-target_link_libraries(greeter_server
+target_link_libraries(server
     gRPC::grpc++_reflection
     protobuf::libprotobuf
 )
 
 # Building client
-add_executable(greeter_client
-    ${CMAKE_CURRENT_SOURCE_DIR}/greeter_client.cc
+add_executable(client
+        ${CMAKE_CURRENT_SOURCE_DIR}/client.cc
     ${PROTO_SRCS}
     ${GRPC_SRCS}
 )
-target_link_libraries(greeter_client
+target_link_libraries(client
     gRPC::grpc++_reflection
     protobuf::libprotobuf
 )
